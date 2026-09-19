@@ -1,0 +1,2522 @@
+Create a file named **`index.html`** and paste the complete code below.
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Emergency Rescue AI</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    background:#08111f;
+    color:white;
+    min-height:100vh;
+}
+
+/* HEADER */
+
+header{
+    height:70px;
+    background:#101b2e;
+    border-bottom:1px solid #263752;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:0 25px;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.logo-icon{
+    width:44px;
+    height:44px;
+
+    background:#e63946;
+
+    border-radius:12px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:24px;
+}
+
+.logo h1{
+    font-size:22px;
+}
+
+.logo span{
+    color:#ff4d5a;
+}
+
+.status{
+    color:#4ade80;
+    font-size:14px;
+
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+.status-dot{
+    width:9px;
+    height:9px;
+    background:#4ade80;
+    border-radius:50%;
+    box-shadow:0 0 10px #4ade80;
+}
+
+/* LAYOUT */
+
+.main{
+    display:grid;
+    grid-template-columns:300px 1fr;
+
+    min-height:calc(100vh - 70px);
+}
+
+/* SIDEBAR */
+
+.sidebar{
+    background:#101b2e;
+    border-right:1px solid #263752;
+
+    padding:20px;
+
+    overflow-y:auto;
+}
+
+.title{
+    color:#94a3b8;
+    font-size:12px;
+
+    text-transform:uppercase;
+    letter-spacing:1px;
+
+    margin:15px 0 10px;
+}
+
+label{
+    display:block;
+    color:#cbd5e1;
+
+    font-size:13px;
+
+    margin-bottom:6px;
+}
+
+select{
+    width:100%;
+
+    background:#08111f;
+    color:white;
+
+    border:1px solid #34445e;
+
+    border-radius:7px;
+
+    padding:11px;
+
+    margin-bottom:10px;
+}
+
+/* CONDITION */
+
+.condition{
+    background:#18263d;
+
+    border:1px solid transparent;
+
+    padding:11px;
+
+    border-radius:8px;
+
+    margin-bottom:7px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    cursor:pointer;
+}
+
+.condition:hover{
+    border-color:#53627b;
+}
+
+.condition.active{
+    border-color:#e63946;
+    background:#321923;
+}
+
+.condition-left{
+    display:flex;
+    align-items:center;
+    gap:9px;
+
+    font-size:13px;
+}
+
+.switch{
+    width:38px;
+    height:20px;
+
+    background:#334155;
+
+    border-radius:20px;
+
+    position:relative;
+}
+
+.switch::after{
+    content:"";
+
+    position:absolute;
+
+    width:16px;
+    height:16px;
+
+    background:white;
+
+    border-radius:50%;
+
+    top:2px;
+    left:2px;
+
+    transition:.2s;
+}
+
+.condition.active .switch{
+    background:#e63946;
+}
+
+.condition.active .switch::after{
+    left:20px;
+}
+
+/* ALGORITHM */
+
+.algorithm{
+    padding:11px;
+
+    background:#18263d;
+
+    border:1px solid #34445e;
+
+    border-radius:8px;
+
+    margin-bottom:7px;
+
+    cursor:pointer;
+}
+
+.algorithm:hover{
+    border-color:#e63946;
+}
+
+.algorithm.selected{
+    border-color:#e63946;
+    background:#351923;
+}
+
+.algorithm small{
+    display:block;
+
+    color:#94a3b8;
+
+    margin-top:4px;
+}
+
+/* BUTTONS */
+
+button{
+    cursor:pointer;
+}
+
+.find-btn{
+    width:100%;
+
+    padding:14px;
+
+    margin-top:12px;
+
+    border:0;
+
+    border-radius:8px;
+
+    background:#e63946;
+
+    color:white;
+
+    font-size:15px;
+
+    font-weight:bold;
+}
+
+.find-btn:hover{
+    background:#ff4d5a;
+}
+
+.clear-btn{
+    width:100%;
+
+    padding:11px;
+
+    margin-top:8px;
+
+    border-radius:8px;
+
+    border:1px solid #34445e;
+
+    background:#18263d;
+
+    color:white;
+}
+
+.voice-btn{
+    width:100%;
+
+    padding:11px;
+
+    margin-top:8px;
+
+    border-radius:8px;
+
+    border:1px solid #34445e;
+
+    background:#18263d;
+
+    color:white;
+}
+
+/* CONTENT */
+
+.content{
+    padding:20px;
+
+    overflow:auto;
+}
+
+/* CARDS */
+
+.cards{
+    display:grid;
+
+    grid-template-columns:
+    repeat(4,1fr);
+
+    gap:12px;
+
+    margin-bottom:15px;
+}
+
+.card{
+    background:#101b2e;
+
+    border:1px solid #263752;
+
+    border-radius:10px;
+
+    padding:16px;
+}
+
+.card-title{
+    color:#94a3b8;
+
+    font-size:11px;
+
+    margin-bottom:7px;
+}
+
+.card-value{
+    font-size:20px;
+
+    font-weight:bold;
+}
+
+.green{
+    color:#4ade80;
+}
+
+.yellow{
+    color:#facc15;
+}
+
+.red{
+    color:#ff4d5a;
+}
+
+/* MAP */
+
+.map-wrapper{
+    background:#101b2e;
+
+    border:1px solid #263752;
+
+    border-radius:10px;
+
+    overflow:hidden;
+}
+
+.map-header{
+    padding:14px 18px;
+
+    border-bottom:1px solid #263752;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+}
+
+.map-header h2{
+    font-size:18px;
+}
+
+.map-info{
+    color:#94a3b8;
+
+    font-size:12px;
+}
+
+/* GRID */
+
+.grid{
+    display:grid;
+
+    grid-template-columns:
+    repeat(20,1fr);
+
+    width:100%;
+
+    aspect-ratio:20/12;
+
+    background:#0b1627;
+}
+
+/* CELL */
+
+.cell{
+    border:1px solid #17243a;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:13px;
+
+    position:relative;
+
+    cursor:pointer;
+
+    transition:.15s;
+}
+
+.cell:hover{
+    background:#233450;
+}
+
+/* TYPES */
+
+.wall{
+    background:#252b35;
+
+    color:#f87171;
+
+    cursor:not-allowed;
+}
+
+.fire{
+    background:#5a2020;
+
+    color:#ff7b5c;
+}
+
+.flood{
+    background:#123e63;
+
+    color:#38bdf8;
+}
+
+.traffic{
+    background:#594716;
+
+    color:#facc15;
+}
+
+.start{
+    background:#dc2626;
+
+    box-shadow:
+    inset 0 0 0 2px white,
+    0 0 12px #dc2626;
+
+    z-index:3;
+}
+
+.end{
+    background:#16a34a;
+
+    box-shadow:
+    inset 0 0 0 2px white,
+    0 0 12px #16a34a;
+
+    z-index:3;
+}
+
+.path{
+    background:#00d9ff;
+
+    color:#001018;
+
+    box-shadow:0 0 8px #00d9ff;
+
+    z-index:2;
+}
+
+.visited{
+    background:#273d5c;
+}
+
+/* LEGEND */
+
+.legend{
+    padding:12px 18px;
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:15px;
+
+    border-top:1px solid #263752;
+
+    color:#cbd5e1;
+
+    font-size:12px;
+}
+
+.legend-item{
+    display:flex;
+
+    align-items:center;
+
+    gap:5px;
+}
+
+/* LEGEND BOX */
+
+.legend-box{
+    width:14px;
+    height:14px;
+
+    border:1px solid #526078;
+}
+
+.l-start{
+    background:#dc2626;
+}
+
+.l-end{
+    background:#16a34a;
+}
+
+.l-wall{
+    background:#252b35;
+}
+
+.l-fire{
+    background:#5a2020;
+}
+
+.l-flood{
+    background:#123e63;
+}
+
+.l-traffic{
+    background:#594716;
+}
+
+.l-path{
+    background:#00d9ff;
+}
+
+/* RESULT */
+
+.result{
+    margin-top:15px;
+
+    background:#101b2e;
+
+    border:1px solid #263752;
+
+    border-radius:10px;
+
+    padding:17px;
+
+    display:none;
+}
+
+.result h2{
+    margin-bottom:12px;
+}
+
+.result-grid{
+    display:grid;
+
+    grid-template-columns:
+    repeat(3,1fr);
+
+    gap:10px;
+}
+
+.result-box{
+    background:#18263d;
+
+    padding:12px;
+
+    border-radius:7px;
+}
+
+.result-box span{
+    display:block;
+
+    color:#94a3b8;
+
+    font-size:11px;
+
+    margin-bottom:5px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:1000px){
+
+    .main{
+        grid-template-columns:1fr;
+    }
+
+    .sidebar{
+        border-right:0;
+        border-bottom:1px solid #263752;
+    }
+
+    .cards{
+        grid-template-columns:
+        repeat(2,1fr);
+    }
+}
+
+@media(max-width:600px){
+
+    .cards{
+        grid-template-columns:1fr;
+    }
+
+    .result-grid{
+        grid-template-columns:1fr;
+    }
+
+    header{
+        padding:0 12px;
+    }
+
+    .logo h1{
+        font-size:17px;
+    }
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- HEADER -->
+
+<header>
+
+    <div class="logo">
+
+        <div class="logo-icon">
+            🚑
+        </div>
+
+        <h1>
+            Emergency <span>Rescue AI</span>
+        </h1>
+
+    </div>
+
+    <div class="status">
+
+        <div class="status-dot"></div>
+
+        System Online
+
+    </div>
+
+</header>
+
+
+
+<div class="main">
+
+
+<!-- SIDEBAR -->
+
+<aside class="sidebar">
+
+
+<div class="title">
+Route Configuration
+</div>
+
+
+<label>
+Rescue Point
+</label>
+
+<select id="startSelect">
+
+<option value="2,1">
+Rescue Point A
+</option>
+
+<option value="10,1">
+Rescue Point B
+</option>
+
+<option value="5,3">
+Rescue Point C
+</option>
+
+</select>
+
+
+
+<label>
+Hospital
+</label>
+
+<select id="endSelect">
+
+<option value="9,18">
+City Hospital
+</option>
+
+<option value="2,18">
+Government Hospital
+</option>
+
+<option value="10,18">
+Emergency Medical Center
+</option>
+
+</select>
+
+
+
+<div class="title">
+Road Conditions
+</div>
+
+
+
+<div class="condition"
+onclick="toggleCondition('wall',this)">
+
+<div class="condition-left">
+
+<span>🚧</span>
+
+Blocked Roads
+
+</div>
+
+<div class="switch"></div>
+
+</div>
+
+
+
+<div class="condition"
+onclick="toggleCondition('fire',this)">
+
+<div class="condition-left">
+
+<span>🔥</span>
+
+Fire Zone
+
+</div>
+
+<div class="switch"></div>
+
+</div>
+
+
+
+<div class="condition"
+onclick="toggleCondition('flood',this)">
+
+<div class="condition-left">
+
+<span>🌊</span>
+
+Flood Zone
+
+</div>
+
+<div class="switch"></div>
+
+</div>
+
+
+
+<div class="condition"
+onclick="toggleCondition('traffic',this)">
+
+<div class="condition-left">
+
+<span>🚗</span>
+
+Traffic Zone
+
+</div>
+
+<div class="switch"></div>
+
+</div>
+
+
+
+<div class="title">
+Pathfinding Algorithm
+</div>
+
+
+
+<div class="algorithm selected"
+onclick="selectAlgorithm('astar',this)">
+
+<b>A* Algorithm</b>
+
+<small>
+Cost + heuristic
+</small>
+
+</div>
+
+
+
+<div class="algorithm"
+onclick="selectAlgorithm('bfs',this)">
+
+<b>BFS</b>
+
+<small>
+Breadth First Search
+</small>
+
+</div>
+
+
+
+<div class="algorithm"
+onclick="selectAlgorithm('dfs',this)">
+
+<b>DFS</b>
+
+<small>
+Depth First Search
+</small>
+
+</div>
+
+
+
+<div class="algorithm"
+onclick="selectAlgorithm('dijkstra',this)">
+
+<b>Dijkstra</b>
+
+<small>
+Minimum weighted cost
+</small>
+
+</div>
+
+
+
+<div class="algorithm"
+onclick="selectAlgorithm('greedy',this)">
+
+<b>Greedy Best First</b>
+
+<small>
+Heuristic based
+</small>
+
+</div>
+
+
+
+<button class="find-btn"
+onclick="findRoute()">
+
+🚑 FIND RESCUE ROUTE
+
+</button>
+
+
+
+<button class="clear-btn"
+onclick="clearMap()">
+
+🧹 Clear Conditions
+
+</button>
+
+
+
+<button class="voice-btn"
+onclick="voiceCommand()">
+
+🎤 Voice Command
+
+</button>
+
+
+</aside>
+
+
+
+<!-- CONTENT -->
+
+<main class="content">
+
+
+<!-- CARDS -->
+
+<div class="cards">
+
+
+<div class="card">
+
+<div class="card-title">
+ALGORITHM
+</div>
+
+<div class="card-value"
+id="algorithmText">
+
+A*
+
+</div>
+
+</div>
+
+
+
+<div class="card">
+
+<div class="card-title">
+DISTANCE
+</div>
+
+<div class="card-value green"
+id="distanceText">
+
+--
+
+</div>
+
+</div>
+
+
+
+<div class="card">
+
+<div class="card-title">
+ROUTE COST
+</div>
+
+<div class="card-value yellow"
+id="costText">
+
+--
+
+</div>
+
+</div>
+
+
+
+<div class="card">
+
+<div class="card-title">
+RISK
+</div>
+
+<div class="card-value"
+id="riskText">
+
+--
+
+</div>
+
+</div>
+
+
+</div>
+
+
+
+<!-- MAP -->
+
+<div class="map-wrapper">
+
+
+<div class="map-header">
+
+<h2>
+📍 Emergency Rescue Map
+</h2>
+
+<div class="map-info">
+
+Click cells to mark conditions
+
+</div>
+
+</div>
+
+
+<div class="grid"
+id="grid">
+
+</div>
+
+
+
+<div class="legend">
+
+
+<div class="legend-item">
+
+<div class="legend-box l-start"></div>
+
+🚑 Rescue
+
+</div>
+
+
+<div class="legend-item">
+
+<div class="legend-box l-end"></div>
+
+🏥 Hospital
+
+</div>
+
+
+<div class="legend-item">
+
+<div class="legend-box l-wall"></div>
+
+🚧 Blocked
+
+</div>
+
+
+<div class="legend-item">
+
+<div class="legend-box l-fire"></div>
+
+🔥 Fire
+
+</div>
+
+
+<div class="legend-item">
+
+<div class="legend-box l-flood"></div>
+
+🌊 Flood
+
+</div>
+
+
+<div class="legend-item">
+
+<div class="legend-box l-traffic"></div>
+
+🚗 Traffic
+
+</div>
+
+
+<div class="legend-item">
+
+<div class="legend-box l-path"></div>
+
+Route
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+<!-- RESULT -->
+
+<div class="result"
+id="result">
+
+
+<h2>
+📊 Route Analysis
+</h2>
+
+
+<div class="result-grid">
+
+
+<div class="result-box">
+
+<span>
+START
+</span>
+
+<b id="resultStart">
+--
+
+</b>
+
+</div>
+
+
+<div class="result-box">
+
+<span>
+DESTINATION
+</span>
+
+<b id="resultEnd">
+--
+
+</b>
+
+</div>
+
+
+<div class="result-box">
+
+<span>
+ALGORITHM
+</span>
+
+<b id="resultAlgorithm">
+--
+
+</b>
+
+</div>
+
+
+<div class="result-box">
+
+<span>
+DISTANCE
+</span>
+
+<b id="resultDistance">
+--
+
+</b>
+
+</div>
+
+
+<div class="result-box">
+
+<span>
+TOTAL COST
+</span>
+
+<b id="resultCost">
+--
+
+</b>
+
+</div>
+
+
+<div class="result-box">
+
+<span>
+STATUS
+</span>
+
+<b class="green"
+id="resultStatus">
+
+--
+
+</b>
+
+</div>
+
+
+</div>
+
+</div>
+
+
+</main>
+
+</div>
+
+
+
+<script>
+
+
+/* ================================
+   CONFIGURATION
+================================ */
+
+const ROWS = 12;
+
+const COLS = 20;
+
+
+/* ================================
+   VARIABLES
+================================ */
+
+let selectedAlgorithm = "astar";
+
+let selectedCondition = null;
+
+let start = {
+    r:2,
+    c:1
+};
+
+let end = {
+    r:9,
+    c:18
+};
+
+
+/*
+   Grid cell values:
+
+   normal = 1
+   traffic = 3
+   flood = 5
+   fire = 8
+   wall = Infinity
+*/
+
+let grid = [];
+
+
+
+/* ================================
+   CREATE GRID
+================================ */
+
+function createGrid(){
+
+    grid = [];
+
+    for(let r=0;r<ROWS;r++){
+
+        let row=[];
+
+        for(let c=0;c<COLS;c++){
+
+            row.push("normal");
+
+        }
+
+        grid.push(row);
+
+    }
+
+    renderGrid();
+
+}
+
+
+
+function renderGrid(){
+
+    const container =
+        document.getElementById("grid");
+
+    container.innerHTML="";
+
+
+    for(let r=0;r<ROWS;r++){
+
+        for(let c=0;c<COLS;c++){
+
+            const cell =
+                document.createElement("div");
+
+            cell.className="cell";
+
+            cell.dataset.r=r;
+
+            cell.dataset.c=c;
+
+
+            let type=grid[r][c];
+
+
+            if(type==="wall"){
+
+                cell.classList.add("wall");
+
+                cell.innerText="🚧";
+
+            }
+
+
+            if(type==="fire"){
+
+                cell.classList.add("fire");
+
+                cell.innerText="🔥";
+
+            }
+
+
+            if(type==="flood"){
+
+                cell.classList.add("flood");
+
+                cell.innerText="🌊";
+
+            }
+
+
+            if(type==="traffic"){
+
+                cell.classList.add("traffic");
+
+                cell.innerText="🚗";
+
+            }
+
+
+            if(
+                r===start.r &&
+                c===start.c
+            ){
+
+                cell.className="cell start";
+
+                cell.innerText="🚑";
+
+            }
+
+
+            if(
+                r===end.r &&
+                c===end.c
+            ){
+
+                cell.className="cell end";
+
+                cell.innerText="🏥";
+
+            }
+
+
+            cell.onclick=function(){
+
+                cellClicked(r,c);
+
+            };
+
+
+            container.appendChild(cell);
+
+        }
+
+    }
+
+}
+
+
+
+/* ================================
+   CELL CLICK
+================================ */
+
+function cellClicked(r,c){
+
+    /*
+       Do not modify start/end
+    */
+
+    if(
+        (r===start.r && c===start.c) ||
+        (r===end.r && c===end.c)
+    ){
+
+        return;
+
+    }
+
+
+    if(!selectedCondition){
+
+        alert(
+            "First select a road condition from the sidebar."
+        );
+
+        return;
+
+    }
+
+
+    if(
+        grid[r][c] === selectedCondition
+    ){
+
+        grid[r][c]="normal";
+
+    }
+
+    else{
+
+        grid[r][c]=selectedCondition;
+
+    }
+
+
+    renderGrid();
+
+}
+
+
+
+/* ================================
+   CONDITION SELECT
+================================ */
+
+function toggleCondition(type,element){
+
+    document
+        .querySelectorAll(".condition")
+        .forEach(x =>
+            x.classList.remove("active")
+        );
+
+
+    if(selectedCondition===type){
+
+        selectedCondition=null;
+
+        return;
+
+    }
+
+
+    selectedCondition=type;
+
+    element.classList.add("active");
+
+}
+
+
+
+/* ================================
+   ALGORITHM SELECT
+================================ */
+
+function selectAlgorithm(type,element){
+
+    selectedAlgorithm=type;
+
+
+    document
+        .querySelectorAll(".algorithm")
+        .forEach(x =>
+            x.classList.remove("selected")
+        );
+
+
+    element.classList.add("selected");
+
+
+    const names={
+
+        astar:"A*",
+
+        bfs:"BFS",
+
+        dfs:"DFS",
+
+        dijkstra:"Dijkstra",
+
+        greedy:"Greedy Best First"
+
+    };
+
+
+    document
+        .getElementById("algorithmText")
+        .innerText=names[type];
+
+}
+
+
+
+/* ================================
+   SELECT START
+================================ */
+
+document
+    .getElementById("startSelect")
+    .addEventListener("change",function(){
+
+        const [r,c]=this.value
+            .split(",")
+            .map(Number);
+
+        start={r,c};
+
+        clearRoute();
+
+        renderGrid();
+
+    });
+
+
+
+/* ================================
+   SELECT END
+================================ */
+
+document
+    .getElementById("endSelect")
+    .addEventListener("change",function(){
+
+        const [r,c]=this.value
+            .split(",")
+            .map(Number);
+
+        end={r,c};
+
+        clearRoute();
+
+        renderGrid();
+
+    });
+
+
+
+/* ================================
+   NEIGHBOURS
+================================ */
+
+function getNeighbors(node){
+
+    const directions=[
+        [-1,0],
+        [1,0],
+        [0,-1],
+        [0,1]
+    ];
+
+    let result=[];
+
+
+    for(const [dr,dc] of directions){
+
+        const nr=node.r+dr;
+
+        const nc=node.c+dc;
+
+
+        if(
+            nr>=0 &&
+            nr<ROWS &&
+            nc>=0 &&
+            nc<COLS
+        ){
+
+            if(grid[nr][nc]!=="wall"){
+
+                result.push({
+                    r:nr,
+                    c:nc
+                });
+
+            }
+
+        }
+
+    }
+
+
+    return result;
+
+}
+
+
+
+/* ================================
+   COST
+================================ */
+
+function movementCost(r,c){
+
+    switch(grid[r][c]){
+
+        case "traffic":
+            return 3;
+
+        case "flood":
+            return 5;
+
+        case "fire":
+            return 8;
+
+        default:
+            return 1;
+
+    }
+
+}
+
+
+
+/* ================================
+   HEURISTIC
+================================ */
+
+function heuristic(a,b){
+
+    return Math.abs(a.r-b.r)
+         +
+           Math.abs(a.c-b.c);
+
+}
+
+
+
+/* ================================
+   KEY
+================================ */
+
+function key(node){
+
+    return node.r + "," + node.c;
+
+}
+
+
+
+/* ================================
+   RECONSTRUCT
+================================ */
+
+function reconstruct(cameFrom,current){
+
+    let path=[current];
+
+    let k=key(current);
+
+
+    while(cameFrom.has(k)){
+
+        current=cameFrom.get(k);
+
+        path.push(current);
+
+        k=key(current);
+
+    }
+
+
+    return path.reverse();
+
+}
+
+
+
+/* ================================
+   A*
+================================ */
+
+function AStar(){
+
+    let open=[start];
+
+    let cameFrom=new Map();
+
+    let gScore=new Map();
+
+
+    gScore.set(key(start),0);
+
+
+    while(open.length){
+
+        open.sort(
+            (a,b)=>{
+
+                const fa=
+                    (gScore.get(key(a)) ?? Infinity)
+                    +
+                    heuristic(a,end);
+
+                const fb=
+                    (gScore.get(key(b)) ?? Infinity)
+                    +
+                    heuristic(b,end);
+
+                return fa-fb;
+
+            }
+        );
+
+
+        const current=open.shift();
+
+
+        if(key(current)===key(end)){
+
+            return reconstruct(
+                cameFrom,
+                current
+            );
+
+        }
+
+
+        for(const neighbor of getNeighbors(current)){
+
+            const newCost=
+                (gScore.get(key(current)) ?? Infinity)
+                +
+                movementCost(
+                    neighbor.r,
+                    neighbor.c
+                );
+
+
+            const nk=key(neighbor);
+
+
+            if(
+                newCost <
+                (gScore.get(nk) ?? Infinity)
+            ){
+
+                cameFrom.set(nk,current);
+
+                gScore.set(nk,newCost);
+
+
+                if(
+                    !open.some(
+                        x=>key(x)===nk
+                    )
+                ){
+
+                    open.push(neighbor);
+
+                }
+
+            }
+
+        }
+
+    }
+
+
+    return [];
+
+}
+
+
+
+/* ================================
+   DIJKSTRA
+================================ */
+
+function Dijkstra(){
+
+    let open=[start];
+
+    let distance=new Map();
+
+    let cameFrom=new Map();
+
+
+    distance.set(key(start),0);
+
+
+    while(open.length){
+
+        open.sort(
+            (a,b)=>
+                (distance.get(key(a)) ?? Infinity)
+                -
+                (distance.get(key(b)) ?? Infinity)
+        );
+
+
+        const current=open.shift();
+
+
+        if(key(current)===key(end)){
+
+            return reconstruct(
+                cameFrom,
+                current
+            );
+
+        }
+
+
+        for(const neighbor of getNeighbors(current)){
+
+            const nk=key(neighbor);
+
+
+            const newDistance=
+                (distance.get(key(current)) ?? Infinity)
+                +
+                movementCost(
+                    neighbor.r,
+                    neighbor.c
+                );
+
+
+            if(
+                newDistance <
+                (distance.get(nk) ?? Infinity)
+            ){
+
+                distance.set(
+                    nk,
+                    newDistance
+                );
+
+                cameFrom.set(
+                    nk,
+                    current
+                );
+
+
+                if(
+                    !open.some(
+                        x=>key(x)===nk
+                    )
+                ){
+
+                    open.push(neighbor);
+
+                }
+
+            }
+
+        }
+
+    }
+
+
+    return [];
+
+}
+
+
+
+/* ================================
+   BFS
+================================ */
+
+function BFS(){
+
+    let queue=[start];
+
+    let visited=new Set();
+
+    let cameFrom=new Map();
+
+
+    visited.add(key(start));
+
+
+    while(queue.length){
+
+        const current=queue.shift();
+
+
+        if(key(current)===key(end)){
+
+            return reconstruct(
+                cameFrom,
+                current
+            );
+
+        }
+
+
+        for(const neighbor of getNeighbors(current)){
+
+            const nk=key(neighbor);
+
+
+            if(!visited.has(nk)){
+
+                visited.add(nk);
+
+                cameFrom.set(
+                    nk,
+                    current
+                );
+
+                queue.push(neighbor);
+
+            }
+
+        }
+
+    }
+
+
+    return [];
+
+}
+
+
+
+/* ================================
+   DFS
+================================ */
+
+function DFS(){
+
+    let stack=[start];
+
+    let visited=new Set();
+
+    let cameFrom=new Map();
+
+
+    visited.add(key(start));
+
+
+    while(stack.length){
+
+        const current=stack.pop();
+
+
+        if(key(current)===key(end)){
+
+            return reconstruct(
+                cameFrom,
+                current
+            );
+
+        }
+
+
+        const neighbors=
+            getNeighbors(current);
+
+
+        for(
+            let i=neighbors.length-1;
+            i>=0;
+            i--
+        ){
+
+            const neighbor=neighbors[i];
+
+            const nk=key(neighbor);
+
+
+            if(!visited.has(nk)){
+
+                visited.add(nk);
+
+                cameFrom.set(
+                    nk,
+                    current
+                );
+
+                stack.push(neighbor);
+
+            }
+
+        }
+
+    }
+
+
+    return [];
+
+}
+
+
+
+/* ================================
+   GREEDY BEST FIRST
+================================ */
+
+function Greedy(){
+
+    let open=[start];
+
+    let visited=new Set();
+
+    let cameFrom=new Map();
+
+
+    visited.add(key(start));
+
+
+    while(open.length){
+
+        open.sort(
+            (a,b)=>
+                heuristic(a,end)
+                -
+                heuristic(b,end)
+        );
+
+
+        const current=open.shift();
+
+
+        if(key(current)===key(end)){
+
+            return reconstruct(
+                cameFrom,
+                current
+            );
+
+        }
+
+
+        for(const neighbor of getNeighbors(current)){
+
+            const nk=key(neighbor);
+
+
+            if(!visited.has(nk)){
+
+                visited.add(nk);
+
+                cameFrom.set(
+                    nk,
+                    current
+                );
+
+                open.push(neighbor);
+
+            }
+
+        }
+
+    }
+
+
+    return [];
+
+}
+
+
+
+/* ================================
+   SELECT ALGORITHM
+================================ */
+
+function calculatePath(){
+
+    switch(selectedAlgorithm){
+
+        case "astar":
+            return AStar();
+
+        case "bfs":
+            return BFS();
+
+        case "dfs":
+            return DFS();
+
+        case "dijkstra":
+            return Dijkstra();
+
+        case "greedy":
+            return Greedy();
+
+    }
+
+}
+
+
+
+/* ================================
+   CALCULATE COST
+================================ */
+
+function calculateCost(path){
+
+    let cost=0;
+
+
+    for(const node of path){
+
+        cost += movementCost(
+            node.r,
+            node.c
+        );
+
+    }
+
+
+    return cost;
+
+}
+
+
+
+/* ================================
+   RISK
+================================ */
+
+function calculateRisk(path){
+
+    if(!path.length){
+
+        return 100;
+
+    }
+
+
+    let risk=0;
+
+
+    for(const node of path){
+
+        switch(grid[node.r][node.c]){
+
+            case "traffic":
+                risk+=2;
+                break;
+
+            case "flood":
+                risk+=5;
+                break;
+
+            case "fire":
+                risk+=8;
+                break;
+
+        }
+
+    }
+
+
+    let percentage=
+        Math.min(
+            100,
+            Math.round(
+                (risk/(path.length*8))*100
+            )
+        );
+
+
+    return percentage;
+
+}
+
+
+
+/* ================================
+   DRAW ROUTE
+================================ */
+
+function drawPath(path){
+
+    clearRoute();
+
+
+    const cells=
+        document.querySelectorAll(".cell");
+
+
+    path.forEach((node,index)=>{
+
+        setTimeout(()=>{
+
+            const position=
+                node.r*COLS+node.c;
+
+
+            const cell=cells[position];
+
+
+            if(
+                !(node.r===start.r &&
+                  node.c===start.c) &&
+                !(node.r===end.r &&
+                  node.c===end.c)
+            ){
+
+                cell.classList.add("path");
+
+                cell.innerText="•";
+
+            }
+
+        },index*35);
+
+    });
+
+}
+
+
+
+/* ================================
+   CLEAR ROUTE
+================================ */
+
+function clearRoute(){
+
+    document
+        .querySelectorAll(".cell")
+        .forEach(cell=>{
+
+            cell.classList.remove(
+                "path",
+                "visited"
+            );
+
+        });
+
+    renderGrid();
+
+}
+
+
+
+/* ================================
+   FIND ROUTE
+================================ */
+
+function findRoute(){
+
+    clearRoute();
+
+
+    const path=
+        calculatePath();
+
+
+    const distance=
+        path.length>0
+        ? path.length-1
+        : 0;
+
+
+    const cost=
+        calculateCost(path);
+
+
+    const risk=
+        calculateRisk(path);
+
+
+    const names={
+
+        astar:"A*",
+
+        bfs:"BFS",
+
+        dfs:"DFS",
+
+        dijkstra:"Dijkstra",
+
+        greedy:"Greedy Best First"
+
+    };
+
+
+    document
+        .getElementById("algorithmText")
+        .innerText=names[selectedAlgorithm];
+
+
+    document
+        .getElementById("distanceText")
+        .innerText=
+        path.length
+        ? distance+" cells"
+        : "--";
+
+
+    document
+        .getElementById("costText")
+        .innerText=
+        path.length
+        ? cost
+        : "--";
+
+
+    document
+        .getElementById("riskText")
+        .innerText=
+        path.length
+        ? risk+"%"
+        : "No Route";
+
+
+    const result=
+        document.getElementById("result");
+
+
+    result.style.display="block";
+
+
+    document
+        .getElementById("resultStart")
+        .innerText=
+        "Rescue Point";
+
+
+    document
+        .getElementById("resultEnd")
+        .innerText=
+        "Hospital";
+
+
+    document
+        .getElementById("resultAlgorithm")
+        .innerText=
+        names[selectedAlgorithm];
+
+
+    document
+        .getElementById("resultDistance")
+        .innerText=
+        path.length
+        ? distance+" cells"
+        : "--";
+
+
+    document
+        .getElementById("resultCost")
+        .innerText=
+        path.length
+        ? cost
+        : "--";
+
+
+    document
+        .getElementById("resultStatus")
+        .innerText=
+        path.length
+        ? "Route Found ✓"
+        : "No Safe Route";
+
+
+    if(path.length){
+
+        drawPath(path);
+
+    }
+
+    else{
+
+        alert(
+            "❌ No route available. Try removing some blocked roads."
+        );
+
+    }
+
+}
+
+
+
+/* ================================
+   CLEAR MAP
+================================ */
+
+function clearMap(){
+
+    for(let r=0;r<ROWS;r++){
+
+        for(let c=0;c<COLS;c++){
+
+            grid[r][c]="normal";
+
+        }
+
+    }
+
+
+    selectedCondition=null;
+
+
+    document
+        .querySelectorAll(".condition")
+        .forEach(x =>
+            x.classList.remove("active")
+        );
+
+
+    document
+        .getElementById("result")
+        .style.display="none";
+
+
+    document
+        .getElementById("distanceText")
+        .innerText="--";
+
+
+    document
+        .getElementById("costText")
+        .innerText="--";
+
+
+    document
+        .getElementById("riskText")
+        .innerText="--";
+
+
+    renderGrid();
+
+}
+
+
+
+/* ================================
+   VOICE COMMAND
+================================ */
+
+function voiceCommand(){
+
+    const SpeechRecognition =
+        window.SpeechRecognition ||
+        window.webkitSpeechRecognition;
+
+
+    if(!SpeechRecognition){
+
+        alert(
+            "Voice recognition is not supported. Use Google Chrome."
+        );
+
+        return;
+
+    }
+
+
+    const recognition=
+        new SpeechRecognition();
+
+
+    recognition.lang="en-IN";
+
+
+    recognition.start();
+
+
+    alert(
+        "🎤 Listening...\nSay: Find route"
+    );
+
+
+    recognition.onresult=function(event){
+
+        const command=
+            event.results[0][0]
+            .transcript
+            .toLowerCase();
+
+
+        if(
+            command.includes("find") ||
+            command.includes("route") ||
+            command.includes("rescue")
+        ){
+
+            findRoute();
+
+        }
+
+        else if(
+            command.includes("clear")
+        ){
+
+            clearMap();
+
+        }
+
+        else{
+
+            alert(
+                "Command not recognized: "+command
+            );
+
+        }
+
+    };
+
+}
+
+
+
+/* ================================
+   START
+================================ */
+
+createGrid();
+
+
+</script>
+
+</body>
+</html>
+```
